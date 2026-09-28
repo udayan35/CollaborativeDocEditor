@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import { toast } from 'react-toastify';
@@ -49,15 +49,15 @@ const Login = () => {
   };
 
   return (
-    <div className={`container my-5 d-flex justify-content-center align-items-center ${darkMode ? 'text-light bg-dark' : 'text-dark bg-light'}`} style={{ minHeight: '80vh' }}>
-      <div className="col-md-8 col-lg-6 col-xl-5 p-5 shadow rounded">
-        <h1 className={`display-4 mb-4 text-center ${darkMode ? 'text-light' : 'text-dark'}`}>Login</h1>
-        <form onSubmit={handleSubmit} className="w-100">
-          <div className="form-group mb-4">
-            <label htmlFor="email" className={darkMode ? 'text-light' : 'text-dark'}>Email</label>
+    <div className={`my-5 flex min-h-[80vh] items-center justify-center px-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+      <div className={`w-full max-w-xl rounded p-8 shadow md:p-12 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+        <h1 className={`mb-8 text-center text-4xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Login</h1>
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="mb-4">
+            <label htmlFor="email" className="mb-1 block">Email</label>
             <input
               type="email"
-              className="form-control"
+              className={`w-full rounded border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
               id="email"
               value={userCreds.email}
               onChange={handleChange}
@@ -65,11 +65,11 @@ const Login = () => {
               required
             />
           </div>
-          <div className="form-group mb-4">
-            <label htmlFor="password" className={darkMode ? 'text-light' : 'text-dark'}>Password</label>
+          <div className="mb-4">
+            <label htmlFor="password" className="mb-1 block">Password</label>
             <input
               type="password"
-              className="form-control"
+              className={`w-full rounded border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
               id="password"
               value={userCreds.password}
               onChange={handleChange}
@@ -77,16 +77,16 @@ const Login = () => {
               required
             />
           </div>
-          <div className="d-grid gap-2">
-            <button disabled={loading} type="submit" className={`btn btn-${darkMode ? 'light' : 'primary'}`}>
+          <div className="grid gap-2">
+            <button disabled={loading} type="submit" className={`rounded px-4 py-2 font-medium ${darkMode ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
               {loading ? 'Logging In...' : 'Login'}
             </button>
           </div>
         </form>
-        <hr className={`my-4 ${darkMode ? 'border-light' : 'border-dark'}`} />
-        <p className={`text-center mb-0 ${darkMode ? 'text-light' : 'text-dark'}`}>
-          Don't have an account?{' '}
-          <Link to="/register" className={darkMode ? 'text-light' : 'text-primary'}>
+        <hr className={`my-6 ${darkMode ? 'border-gray-600' : 'border-gray-300'}`} />
+        <p className="mb-0 text-center">
+          Don&apos;t have an account?{' '}
+          <Link to="/register" className={darkMode ? 'text-gray-200 underline' : 'text-blue-600 underline'}>
             Register here
           </Link>
         </p>

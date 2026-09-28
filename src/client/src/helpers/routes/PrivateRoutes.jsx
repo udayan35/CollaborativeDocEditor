@@ -4,15 +4,13 @@ import { getLocalStorageWithExpiry } from '../auth/auth.helper.js';
 
 const PrivateRoutes = () => {
     const token = getLocalStorageWithExpiry('auth')?.token;
-    const {auth} = useAuth();
+    const { auth, authReady } = useAuth();
 
+    if (!authReady) {
+        return null;
+    }
 
-
-    return (
-        <>
-            {(token || auth )? <Outlet /> : <Navigate to="/login" />}
-        </>
-    );
+    return token && auth?.user ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default PrivateRoutes;

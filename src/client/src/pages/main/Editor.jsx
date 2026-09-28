@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { useSupplier } from '../../context/supplierContext';
@@ -20,10 +20,10 @@ const Editor = () => {
 
         // Apply dark or light theme styles dynamically based on darkMode
         if (darkMode) {
-            editor.classList.add('bg-dark', 'text-white');
+            editor.classList.add('bg-gray-800', 'text-white');
             editor.style.color = 'white';
         } else {
-            editor.classList.add('bg-light', 'text-black');
+            editor.classList.add('bg-white', 'text-black');
             editor.style.color = 'black';
         }
 
@@ -44,11 +44,11 @@ const Editor = () => {
 
         // Set the Quill instance in context
         q.disable(); 
-        q.setText('Loading...'); 
+        q.setText('', 'silent');
         setQuill(q);
     }, [darkMode, setQuill]); 
 
-    return <div className="container" ref={wrapperRef}></div>;
+    return <div className="w-full" ref={wrapperRef}></div>;
 };
 
 export default Editor;

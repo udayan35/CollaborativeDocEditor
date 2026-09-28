@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import { useSupplier } from '../context/supplierContext';
@@ -8,46 +8,51 @@ const Card = ({ cardData, deleteEvent }) => {
     const { setCurrentDoc, darkMode } = useSupplier();
 
     // Conditional styles based on darkMode
-    const cardBgClass = darkMode ? 'bg-dark text-light' : 'bg-light text-dark';
-    const cardTitleClass = darkMode ? 'text-info' : 'text-primary';
-    const textMutedClass = darkMode ? 'text-secondary' : 'text-muted';
+    const cardBgClass = darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900';
+    const cardTitleClass = darkMode ? 'text-cyan-300' : 'text-blue-600';
+    const textMutedClass = darkMode ? 'text-gray-400' : 'text-gray-500';
+    const content = cardData?.content;
+    const previewText = typeof content === 'string'
+        ? content
+        : typeof content?.ops?.[0]?.insert === 'string'
+            ? content.ops[0].insert
+            : '';
 
     return (
         <>
             {cardData?.title && (
-                <div className={`col-12`}>
-                    <div className={`card ${cardBgClass} shadow-sm  h-100`}>
-                        <div className="card-body d-flex flex-column">
+                <div className="w-full">
+                    <div className={`h-full rounded-lg shadow-sm ${cardBgClass}`}>
+                        <div className="flex h-full flex-col p-4">
                             {/* Card Title and Metadata */}
-                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                <h5 className={`card-title ${cardTitleClass} mb-0`}>{cardData?.title}</h5>
+                            <div className="mb-3 flex items-center justify-between gap-3">
+                                <h5 className={`mb-0 font-semibold ${cardTitleClass}`}>{cardData?.title}</h5>
                                 <small className={textMutedClass}>
                                     {new Date(cardData?.createdAt).toLocaleDateString()}
                                 </small>
                             </div>
                             <p className={`${textMutedClass} mb-2`}>Owner: {cardData?.owner?.username}</p>
                             {/* Preview Text */}
-                            <p className="card-text mb-4">
-                                {cardData?.content?.ops[0]?.insert?.slice(0, 50) || ''}
-                                {cardData?.content?.ops[0]?.insert?.length > 50 ? '...' : ''}
+                            <p className="mb-4">
+                                {previewText.slice(0, 50)}
+                                {previewText.length > 50 ? '...' : ''}
                             </p>
                             {/* Action Buttons */}
-                            <div className="d-flex justify-content-between mt-auto">
+                            <div className="mt-auto flex justify-between gap-3">
                                 <button
-                                    className={`btn btn-outline-danger`}
-                                    data-bs-toggle="modal"
-                                    data-bs-target={`#deleteDoc${cardData?._id}`}
+                                    className="rounded border border-red-600 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                                    onClick={() => document.dispatchEvent(new CustomEvent('open-modal', { detail: `deleteDoc${cardData?._id}` }))}
                                 >
-                                    <i className="bi bi-trash3-fill me-2"></i>Delete
+                                    Delete
                                 </button>
                                 <button
                                     onClick={() => {
                                         navigate(`/edit/${cardData._id}`);
                                         setCurrentDoc(cardData);
                                     }}
-                                    className={`btn btn-outline-success`}
+                                    className="rounded border border-green-600 px-3 py-2 text-sm font-medium text-green-600 hover:bg-green-50"
                                 >
-                                    <i className="bi bi-pencil-square me-2"></i>Edit
+                                    Edit
                                 </button>
                             </div>
                         </div>
@@ -61,22 +66,21 @@ const Card = ({ cardData, deleteEvent }) => {
                 modalId={`deleteDoc${cardData?._id}`}
                 content={
                     <>
-                        <p className="lead text-danger">
+                        <p className="text-lg text-red-600">
                             Are you sure you want to delete the document <strong>{cardData?.title}</strong>?
                         </p>
-                        <div className="d-flex justify-content-end mt-4">
+                        <div className="mt-4 flex justify-end">
                             <button
                                 type="button"
-                                className="btn btn-secondary me-2"
-                                data-bs-dismiss="modal"
+                                className="mr-2 rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
+                                onClick={() => document.dispatchEvent(new CustomEvent('close-modal', { detail: `deleteDoc${cardData?._id}` }))}
                             >
                                 Close
                             </button>
                             <button
                                 type="button"
                                 onClick={() => deleteEvent(cardData._id)}
-                                data-bs-dismiss="modal"
-                                className="btn btn-danger"
+                                className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
                             >
                                 Delete
                             </button>
@@ -86,6 +90,29 @@ const Card = ({ cardData, deleteEvent }) => {
             />
         </>
     );
+};
+
+Card.propTypes = {
+    cardData: PropTypes.shape({
+        _id: PropTypes.string,
+        title: PropTypes.string,
+        createdAt: PropTypes.string,
+        owner: PropTypes.shape({
+            username: PropTypes.string,
+        }),
+        content: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.shape({
+                ops: PropTypes.arrayOf(PropTypes.shape({
+                    insert: PropTypes.oneOfType([
+                        PropTypes.string,
+                        PropTypes.object,
+                    ]),
+                })),
+            }),
+        ]),
+    }).isRequired,
+    deleteEvent: PropTypes.func.isRequired,
 };
 
 export default Card;

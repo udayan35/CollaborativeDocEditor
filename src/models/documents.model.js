@@ -10,7 +10,17 @@ const DocumentSchema = new mongoose.Schema({
         unique: true
     },
 
-    content: Object,
+    content: mongoose.Schema.Types.Mixed,
+    // Store Yjs updates as binary data
+    yjsState: {
+        type: Buffer,
+        default: null
+    },
+    // Store Yjs state vector for sync optimization
+    yjsStateVector: {
+        type: Buffer,
+        default: null
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

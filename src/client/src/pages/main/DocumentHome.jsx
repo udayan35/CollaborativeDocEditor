@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/authContext'
 import Card from '../../components/Card';
 import Loader from '../../components/Loader';
@@ -82,35 +82,34 @@ const DocumentHome = () => {
 
     return (
         <>
-            <div className="container my-4">
-                <div className="row d-flex align-items-center justify-content-between px-3">
+            <div className="mx-auto my-4 max-w-7xl px-4">
+                <div className="flex flex-wrap items-center justify-between px-3">
                     {/* Greeting Section */}
-                    <div className="col-12 col-md-8">
-                        <h1 className="display-5 text-primary">
+                    <div className="w-full md:w-2/3">
+                        <h1 className="text-4xl font-semibold text-blue-600">
                             Hello {auth?.user?.username} 👋
                         </h1>
-                        <p className="lead">
+                        <p className="text-lg text-gray-600">
                             Welcome to your document home page
                         </p>
                     </div>
                     {/* Create New Button */}
-                    <div className="col-12 col-md-4 d-flex justify-content-md-end mt-3 mt-md-0">
+                    <div className="mt-3 flex w-full justify-start md:mt-0 md:w-1/3 md:justify-end">
                         <button
                             type="button"
-                            className="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createDoc"
+                            className="rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+                            onClick={() => document.dispatchEvent(new CustomEvent('open-modal', { detail: 'createDoc' }))}
                         >
-                            <i className="bi bi-plus-circle-fill me-2"></i>Create New
+                            Create New
                         </button>
                     </div>
                 </div>
 
                 {/* Cards Section */}
-                <div className="row my-4 d-flex justify-content-center">
+                <div className="my-4 grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {!loading ? (
                         data?.map((cardData, index) => (
-                            <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3 d-flex justify-content-center">
+                            <div key={index} className="my-3 flex justify-center">
                                 <Card cardData={cardData} deleteEvent={handleDelete} />
                             </div>
                         ))
@@ -124,23 +123,23 @@ const DocumentHome = () => {
                     title="Create New Document"
                     modalId="createDoc"
                     content={
-                        <form className="form-control bg-light p-4" onSubmit={handleAdd}>
+                        <form className="p-1" onSubmit={handleAdd}>
                             <div className="mb-3">
-                                <label htmlFor="title" className="form-label">
+                                <label htmlFor="title" className="mb-1 block">
                                     Title
                                 </label>
                                 <input
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    className="form-control"
+                                    className="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                                     id="title"
                                     placeholder="Document Title"
                                     required
                                 />
                             </div>
-                            <div className="d-flex justify-content-end">
-                                <button type="submit" disabled={loading} className="btn btn-primary">
+                            <div className="flex justify-end">
+                                <button type="submit" disabled={loading} className="rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700">
                                     {loading ? "Creating..." : "Create"}
                                 </button>
                             </div>

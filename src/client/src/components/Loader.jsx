@@ -1,9 +1,7 @@
-import React from 'react'
-
 const Loader = () => {
     return (
-        <div className="spinner-border text-primary my-5" role="status">
-            <span className="visually-hidden">Loading...</span>
+        <div className="my-5 h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" role="status">
+            <span className="sr-only">Loading...</span>
         </div>
 
     )

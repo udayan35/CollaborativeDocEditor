@@ -1,8 +1,13 @@
-.ql-toolbar{
-    color: white;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply m-0 min-w-[320px] bg-white text-gray-900 antialiased;
+    }
 }
 
-.custom-tooltip {
-    --bs-tooltip-bg: var(--bd-violet-bg);
-    --bs-tooltip-color: var(--bs-white);
-  }
+.ql-toolbar {
+    color: white;
+}

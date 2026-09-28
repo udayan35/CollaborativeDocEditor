@@ -4,7 +4,7 @@ const validateToken = async (req, res, next) => {
     try {
         const token = req.header("Authorization")?.replace("Bearer ", "");
 
-        if (!token) {
+        if (!token || token === 'undefined' || token === 'null') {
             return res.status(401).json({ msg: "No token, authorization denied" });
         }
 

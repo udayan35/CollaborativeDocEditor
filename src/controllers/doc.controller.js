@@ -25,7 +25,6 @@ export const createDocument = async (req, res) => {
 }
 
 export const getAllRespectedUserDocuments = async (req, res) => {
-
     try {
         const documents = await DocumentModel.find({
             $or: [
@@ -37,11 +36,9 @@ export const getAllRespectedUserDocuments = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 }
 
 export const getSingleUserDocument = async (req, res) => {
-
     try {
         const { documentId } = req.params;
         const document = await DocumentModel.findById(documentId).populate("owner", "username").populate("collaborators", "username");
@@ -49,29 +46,22 @@ export const getSingleUserDocument = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 }
 
 export const getDocThroughSocket = async (id) => {
-    
         try {
             const document = await DocumentModel.findById(id);
             return document;
         } catch (error) {
             console.log(error);
         }
-
 }
 
 export const updateDocument = async (req, res) => {
-
     const { documentId } = req.params;
-
     try {
         const doesDocumentExist = await DocumentModel.findById(documentId);
-
         if (!doesDocumentExist) return res.status(404).json({ message: `Document with id : ${documentId} doesn't exist` });
-
         if (doesDocumentExist.owner.toString() !== req.user.id) return res.status(401).json({ message: `You are not authorized to update this document` });
 
         const { content } = req.body;
@@ -131,7 +121,7 @@ export const addCollaborator = async (req, res) => {
         doesDocumentExist.collaborators.push(doesCollaboratorExist._id);
         const updatedDocument = await doesDocumentExist.save();
 
-        res.status(200).json({ document: updatedDocument, message: `Sucssesfully added ${doesCollaboratorExist.username} as a collaborator` });
+        res.status(200).json({ document: updatedDocument, message: `Successfully added ${doesCollaboratorExist.username} as a collaborator` });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -152,4 +142,4 @@ export const getAllCollaborators = async (req, res) => {
     }catch(error){
         res.status(500).json({ message: error.message });
     }
-}
+} 

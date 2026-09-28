@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.2",
     "express": "^4.18.2",
@@ -23,6 +24,8 @@
     "mongoose": "^8.1.0",
     "nodemailer": "^6.9.8",
     "nodemon": "^3.1.4",
-    "socket.io": "^4.7.4"
+    "socket.io": "^4.7.4",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.32"
   }
 }

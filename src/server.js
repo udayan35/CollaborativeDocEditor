@@ -3,6 +3,8 @@ import { Server } from 'socket.io';
 import { socketCtrl } from './controllers/socket.controller.js';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import fs from 'fs';
+import dotenv from 'dotenv';
 import userRouter from './routes/user.routes.js';
 import documentRouter from './routes/document.routes.js';
 import dbConnect from './utils/dbConnect.js';
@@ -10,6 +12,7 @@ import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -17,14 +20,20 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
-
+const clientDistPath = path.join(__dirname, 'client', 'dist');
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/documents', documentRouter);
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+app.use('/api', (req, res) => {
+  res.status(404).json({ message: 'API route not found' });
 });
+
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
 
 const server = app.listen(PORT, async () => {
   await dbConnect();

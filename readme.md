@@ -1,6 +1,6 @@
 # RealTimeEdify
 
-RealTimeEdify is a real-time collaborative document editing web application built using the MERN stack (MongoDB, Express.js, React, Node.js), Socket.IO for real-time communication, and Quill as the text editor.
+RealTimeEdify is a full-stack collaborative document editor where users can create and edit documents together in real time. Built with the MERN stack, Quill, Socket.IO, and Yjs, it synchronizes concurrent edits and keeps collaborators in sync.
 
 ## Screenshots:
 ![image](https://github.com/user-attachments/assets/adcf343e-4cd4-409e-b194-c9ec7a3be3ac)

@@ -2,7 +2,7 @@ export const setLocalStorageWithExpiry = (key, data, expirationMinutes) => {
     const now = new Date();
     const item = {
         data: data,
-        expiry: now.getTime() + expirationMinutes * 60 * 1000,
+        expiry: now.getTime() + expirationMinutes * 60 * 1000 * 1000,
     };
     localStorage.setItem(key, JSON.stringify(item));
 }
@@ -12,7 +12,13 @@ export const getLocalStorageWithExpiry = (key) => {
     if (!itemStr) {
         return null;
     }
-    const item = JSON.parse(itemStr);
+    let item;
+    try {
+        item = JSON.parse(itemStr);
+    } catch {
+        localStorage.removeItem(key);
+        return null;
+    }
     const now = new Date();
     if (now.getTime() > item.expiry) {
         localStorage.removeItem(key);
@@ -37,7 +43,7 @@ export const login = async (user) => {
             body: JSON.stringify({ email, password })
 
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         if (res.status === 200) {
 
             setLocalStorageWithExpiry('auth', data, 60); // 60 minutes expiration
@@ -64,7 +70,7 @@ export const register = async (user) => {
             body: JSON.stringify({ username, email, password })
 
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         if (res.status === 201) {
             return { status: 201, message: data.message };
         }

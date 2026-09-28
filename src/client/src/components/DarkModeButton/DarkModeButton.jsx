@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './DarkModeButton.module.css';
 import { useSupplier } from '../../context/supplierContext';
 
@@ -12,16 +12,14 @@ const DarkModeButton = () => {
   useEffect(() => {
     const htmlElement = document.documentElement;
 
-    // Set the attribute for Bootstrap theme
-    htmlElement.setAttribute('data-bs-theme', darkMode ? 'dark' : 'light');
+    htmlElement.classList.toggle('dark', darkMode);
 
-    // Toggle body's classes for background and text colors
     if (darkMode) {
-      document.body.classList.add('bg-dark', 'text-white');
-      document.body.classList.remove('bg-light', 'text-dark');
+      document.body.classList.add('bg-gray-900', 'text-white');
+      document.body.classList.remove('bg-white', 'text-gray-900');
     } else {
-      document.body.classList.add('bg-light', 'text-dark');
-      document.body.classList.remove('bg-dark', 'text-white');
+      document.body.classList.add('bg-white', 'text-gray-900');
+      document.body.classList.remove('bg-gray-900', 'text-white');
     }
 
     // Save the current theme preference to localStorage

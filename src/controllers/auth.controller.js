@@ -58,7 +58,6 @@ export const verifyemail = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-
     try{
         const {email, password} = req.body;
         const existingUser = await User.findOne({email});
@@ -71,7 +70,6 @@ export const login = async (req, res) => {
     }catch(error){
         res.status(500).json({message: error.message});
     }
-
 }
 
 export const getUsers = async (req, res) => {
