@@ -1,6 +1,6 @@
-# RealTimeEdify
+# CollaborativeDocEditor
 
-RealTimeEdify is a full-stack collaborative document editor where users can create and edit documents together in real time. Built with the MERN stack, Quill, Socket.IO, and Yjs, it synchronizes concurrent edits and keeps collaborators in sync.
+CollaborativeDocEditor is a full-stack collaborative document editor where users can create and edit documents together in real time. Built with the MERN stack, Quill, Socket.IO, and Yjs, it synchronizes concurrent edits and keeps collaborators in sync.
 
 ## Features
 
