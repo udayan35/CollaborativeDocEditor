@@ -2,119 +2,86 @@
 
 RealTimeEdify is a full-stack collaborative document editor where users can create and edit documents together in real time. Built with the MERN stack, Quill, Socket.IO, and Yjs, it synchronizes concurrent edits and keeps collaborators in sync.
 
-## Screenshots:
-![image](https://github.com/user-attachments/assets/adcf343e-4cd4-409e-b194-c9ec7a3be3ac)
-![image](https://github.com/user-attachments/assets/808859f8-d3a0-40af-80aa-dff6e978a5c1)
-![image](https://github.com/user-attachments/assets/1a759dce-e026-4a16-8f93-13bce44c99e8)
-
-
 ## Features
 
-### 1. Document Collaboration
+- **Real-time collaboration:** Create documents and edit them simultaneously with other users.
+- **Conflict resolution:** Yjs synchronizes concurrent edits and persists document state.
+- **Collaborator presence:** See who is currently active in a document.
+- **Email verification:** Verify accounts using a link sent during registration.
+- **Rich-text editing:** Write and format content with the Quill editor.
 
-Users can create documents and collaborate with others in real-time. Collaborators can simultaneously edit the document, and changes are instantly reflected for all participants.
+## Technologies
 
-### 2. Collaborator Presence
-
-The web app displays a list of online collaborators for each document. Users can see who else is currently active in the document, making collaboration more transparent.
-
-### 3. Email Verification
-<p align="center">
-  <img width="521" alt="Email Verification" src="https://github.com/Slacky300/REAL_TIME_EDIFY/assets/98531038/1ecad94d-eb4b-408c-9b84-9434a9994461">
-</p>
-
-To enhance security and user authentication, RealTimeEdify implements email verification for user accounts. Users receive an email with a verification link upon registration.
-
-To enhance security and user authentication, RealTimeEdify implements email verification for user accounts. Users receive an email with a verification link upon registration.
-
-### 4. Real-Time Editing
-
-Quill, a powerful and customizable WYSIWYG editor, is integrated into RealTimeEdify to provide a seamless real-time editing experience. Users can see live updates as collaborators edit the document.
-
-## Technologies Used
-
-- **MERN Stack:**
-  - MongoDB: NoSQL database for storing user data and document content.
-  - Express.js: Backend framework for building the API.
-  - React: Frontend library for building the user interface.
-  - Node.js: JavaScript runtime for server-side development.
-
-- **Socket.IO:**
-  - Enables real-time bidirectional communication between clients and the server. Used for collaborative editing and presence tracking.
-
-- **Quill:**
-  - Feature-rich WYSIWYG editor used for document editing. Customized for real-time collaboration.
+- MongoDB, Express.js, React, and Node.js (MERN)
+- Socket.IO for real-time communication and collaborator presence
+- Yjs for collaborative document synchronization
+- Quill for rich-text editing
 
 ## Getting Started
 
-Follow these steps to run RealTimeEdify locally:
+### Prerequisites
 
-1. **Clone the repository:**
+- Node.js and npm
+- A MongoDB connection string
+- Email account credentials for sending verification emails
 
-   ```bash
-   git clone https://github.com/your-username/RealTimeEdify.git
-   cd RealTimeEdify
-   ```
-2. **Install dependencies for frontend:**
+### Install
 
-  ```bash
-     cd src
-     cd client
-     npm i
-  ```
-3. **Install dependencies for backend:**
+Clone the repository and install the backend and frontend dependencies:
 
-  ```bash
-     cd src
-     npm i
-  ```
+```bash
+git clone https://github.com/udayan35/CollaborativeDocEditor.git
+cd CollaborativeDocEditor/src
+npm install
+cd client
+npm install
+```
 
-3. **Set up .env variables by creating a .env file in the server directory and adding the following variables:**
+### Configure environment variables
 
-  - For server side:
-   ```bash
-    MONGODB_URI=your_mongo_db_uri
-    JWT_SECRET=your_jwt_secret
-    PORT=8000
-    PASSWORD=your_app_password_for_email
-    EMAIL=your_gmail_email
-    BACKEND_URL=your_backend_url/api/v1
-    FRONTEND_URL=your_frontend_url
-    PRODUCTION=false
-   ```
+Create `src/.env`:
 
-   Replace `your_mongodb_connection_string`, `your_jwt_secret`, `your_email_username`, `your_email_password`, `your_email_host`, and `your_email_port` with your own values.
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=8080
+EMAIL=your_email_address
+PASSWORD=your_email_app_password
+BACKEND_URL=http://localhost:8080/api/v1
+FRONTEND_URL=http://localhost:5173
+```
 
-  **Note:** If you are using Gmail for sending emails, you need to enable "Less secure app access" in your Google account settings.
+Create `src/client/.env`:
 
-  - For client side:
-   ```bash
-    VITE_APP_BACKEND_URL=your_backend_url/api/v1
-    VITE_APP_SOCKET_URL=your_backend_url
-   ```
+```env
+VITE_APP_BACKEND_URL=http://localhost:8080/api/v1
+VITE_APP_SOCKET_URL=http://localhost:8080
+```
 
-   Replace `your_backend_url` with the URL where the backend server is running.
+Use an app password or provider-approved SMTP credentials for email. Keep these files private and do not commit secrets.
 
-4. **Run the frontend**
-  ```bash
-    cd src
-    cd client
-    npm run dev
-  ```
+### Run locally
 
-5. **Run the backend**
-  ```bash
-    cd src
-    npm run dev
-  ```
-6. **Access the application in your browser at http://localhost:5173.**
+Start the backend in one terminal:
 
-7. **Create an account and start collaborating on documents!**
+```bash
+cd src
+npm run dev
+```
 
-## **Contributing**
+Start the frontend in a second terminal:
 
-Contributions are welcome! Please refer to the [Contributing Guidelines](contributing.md) for more information.
+```bash
+cd src/client
+npm run dev
+```
 
-## **License**
+Open the local URL printed by Vite (usually http://localhost:5173), create an account, and start collaborating.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Contributing
+
+Contributions are welcome. See [contributing.md](contributing.md) for guidelines.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
